@@ -40,20 +40,14 @@ body {
 
     background: #f4f7fb;
 
-    /*
-      ★ 중요
-      모바일에서 시작 화면 스크롤 가능
-    */
     overflow-x: hidden;
     overflow-y: auto;
+
     -webkit-overflow-scrolling: touch;
 }
 
 
-/*
-게임 시작 후에만
-페이지 전체 스크롤 방지
-*/
+/* 게임 중에는 화면 고정 */
 
 body.game-active {
     height: 100vh;
@@ -72,11 +66,8 @@ body.game-active {
     min-height: 100vh;
 
     padding:
-
         max(25px, env(safe-area-inset-top))
-
         15px
-
         max(40px, env(safe-area-inset-bottom));
 
     display: flex;
@@ -88,7 +79,6 @@ body.game-active {
     justify-content: center;
 
     text-align: center;
-
 }
 
 
@@ -101,7 +91,6 @@ body.game-active {
     );
 
     margin: 5px 0 10px;
-
 }
 
 
@@ -116,7 +105,6 @@ body.game-active {
     line-height: 1.5;
 
     margin: 5px 0 10px;
-
 }
 
 
@@ -133,7 +121,6 @@ body.game-active {
     );
 
     font-weight: 900;
-
 }
 
 
@@ -155,7 +142,6 @@ body.game-active {
         750px,
         100%
     );
-
 }
 
 
@@ -180,14 +166,12 @@ body.game-active {
     font-weight: 900;
 
     box-shadow:
-
         0 3px 8px
         rgba(0,0,0,0.16);
 
     cursor: pointer;
 
     touch-action: manipulation;
-
 }
 
 
@@ -196,7 +180,6 @@ body.game-active {
     background: #3f51b5;
 
     color: white;
-
 }
 
 
@@ -225,7 +208,6 @@ body.game-active {
     cursor: pointer;
 
     touch-action: manipulation;
-
 }
 
 
@@ -250,12 +232,11 @@ body.game-active {
     background: #222;
 
     overflow: hidden;
-
 }
 
 
 /* ===============================
-   전체 시간
+   전체 게임 시간
 ================================ */
 
 #globalTimer {
@@ -302,14 +283,12 @@ body.game-active {
     font-weight: 900;
 
     pointer-events: none;
-
 }
 
 
 #globalTimer.danger {
 
     background: #d32f2f;
-
 }
 
 
@@ -332,12 +311,11 @@ body.game-active {
     gap: 3px;
 
     background: #222;
-
 }
 
 
 /* ===============================
-   각 플레이어
+   개별 플레이어
 ================================ */
 
 .player {
@@ -360,16 +338,15 @@ body.game-active {
 
     border-right:
         2px solid #444;
-
 }
 
 
 .player:last-child {
-
     border-right: 0;
-
 }
 
+
+/* 선수별 색상 */
 
 .player:nth-child(1) {
     background: #fff8e1;
@@ -393,7 +370,7 @@ body.game-active {
 
 
 /* ===============================
-   선수 이름
+   선수 번호
 ================================ */
 
 .player-name {
@@ -403,14 +380,11 @@ body.game-active {
     width: 100%;
 
     padding:
-
         max(
             8px,
             env(safe-area-inset-top)
         )
-
         2px
-
         5px;
 
     text-align: center;
@@ -430,7 +404,6 @@ body.game-active {
             255,
             0.55
         );
-
 }
 
 
@@ -451,7 +424,6 @@ body.game-active {
     );
 
     font-weight: 900;
-
 }
 
 
@@ -460,7 +432,6 @@ body.game-active {
     color: #1565c0;
 
     font-size: 1.5em;
-
 }
 
 
@@ -491,7 +462,6 @@ body.game-active {
     font-weight: 900;
 
     line-height: 1;
-
 }
 
 
@@ -512,7 +482,6 @@ body.game-active {
     );
 
     font-weight: 900;
-
 }
 
 
@@ -531,7 +500,6 @@ body.game-active {
     border-radius: 20px;
 
     overflow: hidden;
-
 }
 
 
@@ -542,7 +510,6 @@ body.game-active {
     height: 100%;
 
     background: #4caf50;
-
 }
 
 
@@ -561,7 +528,6 @@ body.game-active {
     font-weight: 900;
 
     color: #555;
-
 }
 
 
@@ -580,26 +546,14 @@ body.game-active {
     gap: 3px;
 
     padding:
-
         0
-
         4px
-
         max(
             7px,
             env(safe-area-inset-bottom)
         );
-
 }
 
-
-/*
-★ 핵심
-
-버튼 자체는
-브라우저 스크롤/확대 동작을 하지 않고
-멀티터치를 직접 받음
-*/
 
 .answerBtn {
 
@@ -629,19 +583,22 @@ body.game-active {
 
     cursor: pointer;
 
+    /*
+      동시에 여러 학생이
+      터치할 수 있도록 설정
+    */
+
     touch-action: none;
 
     -webkit-tap-highlight-color:
         transparent;
 
     box-shadow:
-
         inset
         0
         -5px
         0
         rgba(0,0,0,0.15);
-
 }
 
 
@@ -650,21 +607,18 @@ body.game-active {
     transform: scale(0.95);
 
     filter: brightness(0.85);
-
 }
 
 
 .oddBtn {
 
     background: #2196f3;
-
 }
 
 
 .evenBtn {
 
     background: #e91e63;
-
 }
 
 
@@ -677,7 +631,6 @@ body.game-active {
     animation:
         correctFlash
         0.23s;
-
 }
 
 
@@ -686,7 +639,6 @@ body.game-active {
     0% {
         background: #69f0ae;
     }
-
 }
 
 
@@ -699,7 +651,6 @@ body.game-active {
     background: #333 !important;
 
     color: white;
-
 }
 
 
@@ -724,7 +675,6 @@ body.game-active {
     color: #ff5252;
 
     font-weight: 900;
-
 }
 
 
@@ -739,7 +689,6 @@ body.game-active {
         1.3vw,
         20px
     );
-
 }
 
 
@@ -754,7 +703,6 @@ body.game-active {
     );
 
     font-weight: 900;
-
 }
 
 
@@ -767,7 +715,6 @@ body.game-active {
     background: #263238 !important;
 
     color: white;
-
 }
 
 
@@ -792,12 +739,11 @@ body.game-active {
     color: #ffeb3b;
 
     font-weight: 900;
-
 }
 
 
 /* ===============================
-   결과 화면
+   최종 결과
 ================================ */
 
 #resultScreen {
@@ -829,7 +775,6 @@ body.game-active {
     align-items: center;
 
     justify-content: center;
-
 }
 
 
@@ -842,7 +787,6 @@ body.game-active {
         6vw,
         50px
     );
-
 }
 
 
@@ -853,7 +797,6 @@ body.game-active {
             650px,
             95%
         );
-
 }
 
 
@@ -883,7 +826,6 @@ body.game-active {
         3vw,
         24px
     );
-
 }
 
 
@@ -892,7 +834,6 @@ body.game-active {
     background: #fff176;
 
     font-weight: 900;
-
 }
 
 
@@ -919,12 +860,11 @@ body.game-active {
     cursor: pointer;
 
     touch-action: manipulation;
-
 }
 
 
 /* ===============================
-   세로 화면 모바일
+   모바일 세로 화면
 ================================ */
 
 @media
@@ -944,7 +884,7 @@ and
 
 
 /* ===============================
-   화면 높이가 낮을 때
+   높이가 낮은 화면
 ================================ */
 
 @media
@@ -955,13 +895,11 @@ and
         padding-top: 5px;
 
         padding-bottom: 3px;
-
     }
 
     .score {
 
         margin-top: 2px;
-
     }
 
     .number {
@@ -971,7 +909,6 @@ and
             7vw,
             100px
         );
-
     }
 
     .timerBox {
@@ -979,7 +916,6 @@ and
         height: 11px;
 
         margin-bottom: 5px;
-
     }
 
     .answerBtn {
@@ -989,7 +925,6 @@ and
             25vh,
             115px
         );
-
     }
 
 }
@@ -1017,7 +952,7 @@ and
     </p>
 
 
-    <!-- 인원 -->
+    <!-- 참가 인원 -->
 
     <div class="option-title">
         👥 참가 인원
@@ -1029,52 +964,38 @@ and
         <button
         class="setupBtn countBtn"
         data-count="1">
-
             1명
-
         </button>
-
 
         <button
         class="setupBtn countBtn"
         data-count="2">
-
             2명
-
         </button>
-
 
         <button
         class="setupBtn countBtn"
         data-count="3">
-
             3명
-
         </button>
-
 
         <button
         class="setupBtn countBtn"
         data-count="4">
-
             4명
-
         </button>
-
 
         <button
         class="setupBtn countBtn selected"
         data-count="5">
-
             5명
-
         </button>
 
     </div>
 
 
 
-    <!-- 문제별 시간 -->
+    <!-- 한 문제 제한 시간 -->
 
     <div class="option-title">
         ⏱️ 한 문제 제한 시간
@@ -1086,43 +1007,32 @@ and
         <button
         class="setupBtn questionTimeBtn selected"
         data-time="3000">
-
             3초
-
         </button>
-
 
         <button
         class="setupBtn questionTimeBtn"
         data-time="5000">
-
             5초
-
         </button>
-
 
         <button
         class="setupBtn questionTimeBtn"
         data-time="10000">
-
             10초
-
         </button>
-
 
         <button
         class="setupBtn questionTimeBtn"
         data-time="0">
-
             제한 없음
-
         </button>
 
     </div>
 
 
 
-    <!-- 전체 시간 -->
+    <!-- 전체 문제풀이 시간 -->
 
     <div class="option-title">
         ⏳ 전체 문제풀이 시간
@@ -1132,29 +1042,27 @@ and
     <div class="option-buttons">
 
         <button
-        class="setupBtn totalTimeBtn selected"
-        data-time="60000">
-
-            1분
-
+        class="setupBtn totalTimeBtn"
+        data-time="30000">
+            30초
         </button>
 
+        <button
+        class="setupBtn totalTimeBtn selected"
+        data-time="60000">
+            1분
+        </button>
 
         <button
         class="setupBtn totalTimeBtn"
         data-time="120000">
-
             2분
-
         </button>
-
 
         <button
         class="setupBtn totalTimeBtn"
         data-time="180000">
-
             3분
-
         </button>
 
     </div>
@@ -1162,9 +1070,7 @@ and
 
 
     <button id="startBtn">
-
         게임 시작
-
     </button>
 
 </div>
@@ -1178,9 +1084,7 @@ and
 <div id="game">
 
     <div id="globalTimer">
-
         ⏳ 1:00
-
     </div>
 
 
@@ -1191,7 +1095,7 @@ and
 
 
 <!-- ==============================
-     결과
+     결과 화면
 =============================== -->
 
 <div id="resultScreen">
@@ -1205,9 +1109,7 @@ and
 
 
     <button id="restartBtn">
-
         다시 하기
-
     </button>
 
 </div>
@@ -1220,9 +1122,17 @@ and
    기본 설정
 ===================================== */
 
+/* 한 문제 기본 시간 = 3초 */
+
 let QUESTION_TIME = 3000;
 
+
+/* 전체 게임 기본 시간 = 1분 */
+
 let TOTAL_TIME = 60000;
+
+
+/* 기본 인원 = 5명 */
 
 let playerCount = 5;
 
@@ -1241,7 +1151,7 @@ let globalStartTime = 0;
 
 
 /* =====================================
-   시작 화면 선택 공통 함수
+   선택 버튼 처리
 ===================================== */
 
 function selectButton(
@@ -1268,7 +1178,9 @@ function selectButton(
 
 
 
-/* 참가 인원 */
+/* =====================================
+   참가 인원 선택
+===================================== */
 
 document
 .querySelectorAll(".countBtn")
@@ -1285,7 +1197,6 @@ document
 
 
             playerCount =
-
                 Number(
                     button.dataset.count
                 );
@@ -1297,7 +1208,9 @@ document
 
 
 
-/* 문제 제한 시간 */
+/* =====================================
+   한 문제 제한 시간
+===================================== */
 
 document
 .querySelectorAll(
@@ -1316,7 +1229,6 @@ document
 
 
             QUESTION_TIME =
-
                 Number(
                     button.dataset.time
                 );
@@ -1328,7 +1240,9 @@ document
 
 
 
-/* 전체 게임 시간 */
+/* =====================================
+   전체 문제풀이 시간
+===================================== */
 
 document
 .querySelectorAll(
@@ -1347,7 +1261,6 @@ document
 
 
             TOTAL_TIME =
-
                 Number(
                     button.dataset.time
                 );
@@ -1410,10 +1323,7 @@ function startGame() {
     }
 
 
-    /*
-       시작 화면에서는 스크롤 가능,
-       게임 화면에서는 고정
-    */
+    /* 게임 중에는 페이지 고정 */
 
     document.body
     .classList.add(
@@ -1433,6 +1343,15 @@ function startGame() {
         "block";
 
 
+    /* 이전 경고 색 제거 */
+
+    document
+    .getElementById("globalTimer")
+    .classList.remove(
+        "danger"
+    );
+
+
     createPlayerAreas();
 
 
@@ -1440,8 +1359,8 @@ function startGame() {
 
 
     /*
-       ★ 모든 학생이
-       각각 독립적으로 시작
+       모든 학생이 각각
+       동시에 게임 시작
     */
 
     players.forEach(
@@ -1459,7 +1378,7 @@ function startGame() {
 
 
 /* =====================================
-   플레이어 영역 생성
+   플레이어 화면 생성
 ===================================== */
 
 function createPlayerAreas() {
@@ -1598,9 +1517,7 @@ function createPlayerAreas() {
 
                     <button
                     class="answerBtn oddBtn"
-
                     data-player="${player.id}"
-
                     data-choice="odd">
 
                         홀수
@@ -1610,9 +1527,7 @@ function createPlayerAreas() {
 
                     <button
                     class="answerBtn evenBtn"
-
                     data-player="${player.id}"
-
                     data-choice="even">
 
                         짝수
@@ -1634,8 +1549,7 @@ function createPlayerAreas() {
 
 
     /*
-       ★ onclick이 아니라
-       Pointer Event 사용
+       멀티터치 이벤트 연결
     */
 
     bindAnswerButtons();
@@ -1662,24 +1576,21 @@ function bindAnswerButtons() {
         button => {
 
 
-            /*
-               pointerdown은
-               마우스 / 손가락 / 펜을
-               하나의 방식으로 처리
-            */
-
             button.addEventListener(
                 "pointerdown",
                 function(event) {
 
 
+                    /*
+                       브라우저 기본 터치 동작 차단
+                    */
+
                     event.preventDefault();
 
 
                     /*
-                      같은 버튼에서
-                      손가락 이벤트를
-                      독립적으로 관리
+                       각 손가락을
+                       독립적으로 처리
                     */
 
                     try {
@@ -1711,7 +1622,8 @@ function bindAnswerButtons() {
 
 
                     /*
-                      터치 순간 즉시 판정
+                       손가락이 닿는 순간
+                       바로 판정
                     */
 
                     answer(
@@ -1730,7 +1642,6 @@ function bindAnswerButtons() {
 
 
             const release =
-
                 function() {
 
                     this.classList.remove(
@@ -1766,7 +1677,7 @@ function bindAnswerButtons() {
 
 
 /* =====================================
-   문제 출제
+   새 문제
 ===================================== */
 
 function nextQuestion(id) {
@@ -1794,6 +1705,10 @@ function nextQuestion(id) {
     );
 
 
+    /*
+       1 ~ 99 랜덤 숫자
+    */
+
     player.number =
 
         Math.floor(
@@ -1820,6 +1735,11 @@ function nextQuestion(id) {
 
     }
 
+
+    /*
+       문제 제한 시간이
+       있을 때만 타이머 시작
+    */
 
     if(
         QUESTION_TIME > 0
@@ -1960,6 +1880,10 @@ function startQuestionTimer(id) {
                     "초";
 
 
+                /*
+                   타이머 색 변화
+                */
+
                 if(
                     percent <= 30
                 ) {
@@ -2017,7 +1941,7 @@ function startQuestionTimer(id) {
 
 
 /* =====================================
-   답 판정
+   답 선택
 ===================================== */
 
 function answer(
@@ -2048,9 +1972,8 @@ function answer(
 
 
     /*
-      같은 학생이
-      동시에 두 버튼을 눌러도
-      첫 입력만 인정
+       동시에 두 버튼을 눌러도
+       첫 번째 입력만 인정
     */
 
     player.accepting =
@@ -2139,6 +2062,10 @@ function correct(id) {
         );
 
 
+    /*
+       초록색 정답 효과
+    */
+
     if(playerArea) {
 
         playerArea
@@ -2166,8 +2093,8 @@ function correct(id) {
 
 
     /*
-      각 학생은
-      자기 속도로 다음 문제 진행
+       해당 학생만
+       바로 다음 문제
     */
 
     setTimeout(
@@ -2286,7 +2213,6 @@ function eliminate(
     if(area) {
 
         area.className =
-
             "player eliminated";
 
 
@@ -2336,7 +2262,7 @@ function eliminate(
 
 
 /* =====================================
-   전체 시간
+   전체 게임 타이머 시작
 ===================================== */
 
 function startGlobalTimer() {
@@ -2400,6 +2326,10 @@ function startGlobalTimer() {
                     );
 
 
+                /*
+                   마지막 10초 빨간색
+                */
+
                 if(
                     remaining <= 10000
                 ) {
@@ -2438,7 +2368,7 @@ function startGlobalTimer() {
 
 
 /* =====================================
-   전체 시간 표시
+   전체 남은 시간 표시
 ===================================== */
 
 function updateGlobalTimerDisplay(
@@ -2522,6 +2452,11 @@ function finishByTotalTime() {
                 false;
 
 
+            /*
+               살아 있는 학생은
+               시간 종료 화면 표시
+            */
+
             if(player.alive) {
 
                 const area =
@@ -2535,7 +2470,6 @@ function finishByTotalTime() {
                 if(area) {
 
                     area.className =
-
                         "player time-finished";
 
 
@@ -2586,7 +2520,7 @@ function finishByTotalTime() {
 
 
 /* =====================================
-   전원 탈락 확인
+   모든 학생 탈락 확인
 ===================================== */
 
 function checkAllEliminated() {
@@ -2624,7 +2558,7 @@ function checkAllEliminated() {
 
 
 /* =====================================
-   결과
+   최종 순위
 ===================================== */
 
 function showResult() {
@@ -2657,6 +2591,10 @@ function showResult() {
     );
 
 
+    /*
+       점수 높은 순서
+    */
+
     const ranking =
 
         [...players]
@@ -2686,6 +2624,10 @@ function showResult() {
             index
         ) => {
 
+
+            /*
+               동점 처리
+            */
 
             if(
                 index > 0 &&
@@ -2782,7 +2724,7 @@ function showResult() {
 
 
 /* =====================================
-   다시 시작
+   다시 하기
 ===================================== */
 
 document
@@ -2792,10 +2734,6 @@ document
 .addEventListener(
     "click",
     () => {
-
-        /*
-          모바일 스크롤 복구
-        */
 
         document.body
         .classList.remove(
