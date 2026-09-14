@@ -13,9 +13,9 @@ user-scalable=no">
 
 <style>
 
-/* ===============================
+/* ==================================================
    기본
-================================ */
+================================================== */
 
 * {
     box-sizing: border-box;
@@ -46,36 +46,30 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
-
-/* 게임 중에는 화면 고정 */
-
 body.game-active {
     height: 100vh;
     overflow: hidden;
 }
 
 
-/* ===============================
+/* ==================================================
    시작 화면
-================================ */
+================================================== */
 
 #setup {
 
     width: 100%;
-
     min-height: 100vh;
 
     padding:
         max(25px, env(safe-area-inset-top))
-        15px
+        18px
         max(40px, env(safe-area-inset-bottom));
 
     display: flex;
-
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
@@ -84,17 +78,19 @@ body.game-active {
 
 #setup h1 {
 
+    margin: 5px 0 10px;
+
     font-size: clamp(
         34px,
         7vw,
-        52px
+        54px
     );
-
-    margin: 5px 0 10px;
 }
 
 
 #setup p {
+
+    margin: 5px 0 20px;
 
     font-size: clamp(
         16px,
@@ -102,60 +98,82 @@ body.game-active {
         21px
     );
 
-    line-height: 1.5;
-
-    margin: 5px 0 10px;
+    line-height: 1.6;
 }
 
 
-.option-title {
+/* ==================================================
+   설정 상자
+================================================== */
 
-    margin-top: 20px;
+#settingsBox {
 
-    margin-bottom: 9px;
+    width: min(520px, 100%);
+
+    padding: 22px;
+
+    background: white;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,0.12);
+}
+
+
+.setting-row {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    width: 100%;
+
+    margin-bottom: 16px;
+}
+
+
+.setting-row:last-child {
+
+    margin-bottom: 0;
+}
+
+
+.setting-label {
+
+    flex: 1;
+
+    text-align: left;
 
     font-size: clamp(
-        19px,
-        4vw,
-        24px
+        17px,
+        3.4vw,
+        21px
     );
 
     font-weight: 900;
 }
 
 
-/* ===============================
-   설정 버튼
-================================ */
+/* ==================================================
+   펼침 선택
+================================================== */
 
-.option-buttons {
+.setting-select {
 
-    display: flex;
+    width: 185px;
+    min-height: 55px;
 
-    flex-wrap: wrap;
+    padding: 8px 13px;
 
-    justify-content: center;
+    border:
+        3px solid #3f51b5;
 
-    gap: 9px;
-
-    width: min(
-        750px,
-        100%
-    );
-}
-
-
-.setupBtn {
-
-    min-width: 82px;
-
-    min-height: 54px;
-
-    padding: 8px 15px;
-
-    border: none;
-
-    border-radius: 12px;
+    border-radius: 13px;
 
     background: white;
 
@@ -165,66 +183,74 @@ body.game-active {
 
     font-weight: 900;
 
-    box-shadow:
-        0 3px 8px
-        rgba(0,0,0,0.16);
-
     cursor: pointer;
 
     touch-action: manipulation;
 }
 
 
-.setupBtn.selected {
+.setting-select:focus {
 
-    background: #3f51b5;
+    outline: none;
 
-    color: white;
+    box-shadow:
+        0 0 0 4px
+        rgba(63,81,181,0.18);
 }
 
 
+/* ==================================================
+   시작 버튼
+================================================== */
+
 #startBtn {
 
-    margin-top: 30px;
+    margin-top: 25px;
 
-    min-width: 220px;
+    min-width: 230px;
+    min-height: 68px;
 
-    min-height: 65px;
-
-    padding: 14px 40px;
+    padding: 14px 45px;
 
     border: none;
-
-    border-radius: 15px;
+    border-radius: 16px;
 
     background: #ff9800;
 
     color: white;
 
-    font-size: 26px;
+    font-size: 27px;
 
     font-weight: 900;
 
     cursor: pointer;
 
     touch-action: manipulation;
+
+    box-shadow:
+        0 5px 10px
+        rgba(0,0,0,0.2);
 }
 
 
-/* ===============================
+#startBtn:active {
+
+    transform: scale(0.96);
+}
+
+
+/* ==================================================
    게임
-================================ */
+================================================== */
 
 #game {
 
     display: none;
 
     position: fixed;
-
     inset: 0;
 
     width: 100vw;
-
     height: 100dvh;
 
     min-height: 100vh;
@@ -235,9 +261,80 @@ body.game-active {
 }
 
 
-/* ===============================
-   전체 게임 시간
-================================ */
+/* ==================================================
+   시작 카운트다운
+================================================== */
+
+#countdownOverlay {
+
+    display: none;
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 500;
+
+    background:
+        rgba(0,0,0,0.78);
+
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    pointer-events: all;
+}
+
+
+#countdownNumber {
+
+    font-size: clamp(
+        120px,
+        24vw,
+        300px
+    );
+
+    font-weight: 900;
+
+    line-height: 1;
+
+    text-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.5);
+}
+
+
+.countdown-pop {
+
+    animation:
+        countdownPop
+        0.75s ease-out;
+}
+
+
+@keyframes countdownPop {
+
+    0% {
+        transform: scale(0.35);
+        opacity: 0;
+    }
+
+    35% {
+        transform: scale(1.25);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+}
+
+
+/* ==================================================
+   전체 타이머
+================================================== */
 
 #globalTimer {
 
@@ -263,12 +360,7 @@ body.game-active {
     border-radius: 13px;
 
     background:
-        rgba(
-            0,
-            0,
-            0,
-            0.85
-        );
+        rgba(0,0,0,0.85);
 
     color: white;
 
@@ -289,21 +381,44 @@ body.game-active {
 #globalTimer.danger {
 
     background: #d32f2f;
+
+    animation:
+        globalDanger
+        0.55s
+        infinite
+        alternate;
 }
 
 
-/* ===============================
-   플레이어 전체 영역
-================================ */
+@keyframes globalDanger {
+
+    from {
+
+        transform:
+            translateX(-50%)
+            scale(1);
+    }
+
+    to {
+
+        transform:
+            translateX(-50%)
+            scale(1.07);
+    }
+
+}
+
+
+/* ==================================================
+   플레이어 전체
+================================================== */
 
 #players {
 
     width: 100%;
-
     height: 100%;
 
     display: flex;
-
     flex-direction: row;
 
     align-items: stretch;
@@ -314,9 +429,9 @@ body.game-active {
 }
 
 
-/* ===============================
-   개별 플레이어
-================================ */
+/* ==================================================
+   플레이어
+================================================== */
 
 .player {
 
@@ -326,13 +441,12 @@ body.game-active {
 
     height: 100%;
 
-    display: flex;
+    position: relative;
 
+    display: flex;
     flex-direction: column;
 
     align-items: center;
-
-    position: relative;
 
     overflow: hidden;
 
@@ -342,11 +456,10 @@ body.game-active {
 
 
 .player:last-child {
+
     border-right: 0;
 }
 
-
-/* 선수별 색상 */
 
 .player:nth-child(1) {
     background: #fff8e1;
@@ -369,9 +482,9 @@ body.game-active {
 }
 
 
-/* ===============================
+/* ==================================================
    선수 번호
-================================ */
+================================================== */
 
 .player-name {
 
@@ -398,29 +511,24 @@ body.game-active {
     font-weight: 900;
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            0.55
-        );
+        rgba(255,255,255,0.55);
 }
 
 
-/* ===============================
+/* ==================================================
    점수
-================================ */
+================================================== */
 
 .score {
 
     flex: 0 0 auto;
 
-    margin-top: 6px;
+    margin-top: 5px;
 
     font-size: clamp(
-        14px,
-        1.6vw,
-        24px
+        13px,
+        1.5vw,
+        23px
     );
 
     font-weight: 900;
@@ -431,26 +539,48 @@ body.game-active {
 
     color: #1565c0;
 
-    font-size: 1.5em;
+    font-size: 1.45em;
 }
 
 
-/* ===============================
-   숫자
-================================ */
+/* ==================================================
+   하트
+================================================== */
+
+.hearts {
+
+    flex: 0 0 auto;
+
+    min-height: 30px;
+
+    margin-top: 3px;
+
+    font-size: clamp(
+        18px,
+        2vw,
+        31px
+    );
+
+    line-height: 1;
+
+    letter-spacing: 1px;
+}
+
+
+/* ==================================================
+   문제 숫자
+================================================== */
 
 .number {
 
     flex: 1 1 auto;
 
     width: 100%;
-
     min-height: 0;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     font-size: clamp(
@@ -465,9 +595,48 @@ body.game-active {
 }
 
 
-/* ===============================
-   문제별 타이머
-================================ */
+/* ==================================================
+   상태 메시지
+================================================== */
+
+.status-message {
+
+    flex: 0 0 auto;
+
+    height: 25px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 3px;
+
+    text-align: center;
+
+    font-size: clamp(
+        11px,
+        1.25vw,
+        18px
+    );
+
+    font-weight: 900;
+}
+
+
+.status-correct {
+    color: #2e7d32;
+}
+
+
+.status-wrong {
+    color: #d32f2f;
+}
+
+
+/* ==================================================
+   문제 타이머
+================================================== */
 
 .timerText {
 
@@ -490,7 +659,6 @@ body.game-active {
     flex: 0 0 auto;
 
     width: 84%;
-
     height: 15px;
 
     margin-bottom: 8px;
@@ -506,7 +674,6 @@ body.game-active {
 .timerBar {
 
     width: 100%;
-
     height: 100%;
 
     background: #4caf50;
@@ -531,9 +698,9 @@ body.game-active {
 }
 
 
-/* ===============================
-   하단 답 버튼
-================================ */
+/* ==================================================
+   답 버튼
+================================================== */
 
 .answer-buttons {
 
@@ -583,11 +750,6 @@ body.game-active {
 
     cursor: pointer;
 
-    /*
-      동시에 여러 학생이
-      터치할 수 있도록 설정
-    */
-
     touch-action: none;
 
     -webkit-tap-highlight-color:
@@ -606,25 +768,23 @@ body.game-active {
 
     transform: scale(0.95);
 
-    filter: brightness(0.85);
+    filter: brightness(0.82);
 }
 
 
 .oddBtn {
-
     background: #2196f3;
 }
 
 
 .evenBtn {
-
     background: #e91e63;
 }
 
 
-/* ===============================
+/* ==================================================
    정답 효과
-================================ */
+================================================== */
 
 .correctFlash {
 
@@ -639,12 +799,84 @@ body.game-active {
     0% {
         background: #69f0ae;
     }
+
 }
 
 
-/* ===============================
+/* ==================================================
+   오답 3초 정지
+================================================== */
+
+.penalty-overlay {
+
+    display: none;
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 100;
+
+    background:
+        rgba(180,0,0,0.9);
+
+    color: white;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    pointer-events: all;
+}
+
+
+.penalty-title {
+
+    font-size: clamp(
+        22px,
+        3vw,
+        48px
+    );
+
+    font-weight: 900;
+
+    margin-bottom: 8px;
+}
+
+
+.penalty-count {
+
+    font-size: clamp(
+        65px,
+        9vw,
+        150px
+    );
+
+    font-weight: 900;
+
+    line-height: 1;
+}
+
+
+.penalty-sub {
+
+    margin-top: 10px;
+
+    font-size: clamp(
+        12px,
+        1.5vw,
+        22px
+    );
+
+    font-weight: 900;
+}
+
+
+/* ==================================================
    탈락
-================================ */
+================================================== */
 
 .player.eliminated {
 
@@ -661,7 +893,6 @@ body.game-active {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
@@ -706,9 +937,9 @@ body.game-active {
 }
 
 
-/* ===============================
+/* ==================================================
    전체 시간 종료
-================================ */
+================================================== */
 
 .player.time-finished {
 
@@ -725,7 +956,6 @@ body.game-active {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
@@ -742,29 +972,23 @@ body.game-active {
 }
 
 
-/* ===============================
-   최종 결과
-================================ */
+/* ==================================================
+   결과 화면
+================================================== */
 
 #resultScreen {
 
     display: none;
 
     position: fixed;
-
     inset: 0;
 
-    z-index: 100;
+    z-index: 1000;
 
     padding: 20px;
 
     background:
-        rgba(
-            0,
-            0,
-            0,
-            0.93
-        );
+        rgba(0,0,0,0.93);
 
     color: white;
 
@@ -773,7 +997,6 @@ body.game-active {
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 }
 
@@ -805,9 +1028,7 @@ body.game-active {
     display: flex;
 
     align-items: center;
-
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
     gap: 15px;
 
@@ -846,7 +1067,6 @@ body.game-active {
     padding: 12px 35px;
 
     border: none;
-
     border-radius: 12px;
 
     background: #ff9800;
@@ -863,9 +1083,9 @@ body.game-active {
 }
 
 
-/* ===============================
-   모바일 세로 화면
-================================ */
+/* ==================================================
+   모바일 세로
+================================================== */
 
 @media
 (max-width: 700px)
@@ -880,26 +1100,55 @@ and
         margin-top: 15px;
     }
 
+    .setting-row {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 7px;
+    }
+
+    .setting-label {
+        text-align: center;
+    }
+
+    .setting-select {
+        width: 100%;
+    }
+
 }
 
 
-/* ===============================
-   높이가 낮은 화면
-================================ */
+/* ==================================================
+   낮은 화면
+================================================== */
 
 @media
 (max-height: 650px) {
 
     .player-name {
-
         padding-top: 5px;
-
         padding-bottom: 3px;
     }
 
     .score {
-
         margin-top: 2px;
+    }
+
+    .hearts {
+
+        min-height: 22px;
+
+        font-size: clamp(
+            15px,
+            1.7vw,
+            24px
+        );
+    }
+
+    .status-message {
+        height: 20px;
     }
 
     .number {
@@ -912,9 +1161,7 @@ and
     }
 
     .timerBox {
-
         height: 11px;
-
         margin-bottom: 5px;
     }
 
@@ -936,9 +1183,9 @@ and
 <body>
 
 
-<!-- ==============================
+<!-- ==================================================
      시작 화면
-=============================== -->
+================================================== -->
 
 <div id="setup">
 
@@ -948,155 +1195,204 @@ and
 
     <p>
         숫자를 보고 홀수 또는 짝수를 눌러라!<br>
-        틀리거나 제한 시간을 넘으면 탈락!
+        틀리면 하트가 하나 줄어듭니다.
     </p>
 
 
-    <!-- 참가 인원 -->
+    <div id="settingsBox">
 
-    <div class="option-title">
-        👥 참가 인원
+
+        <!-- 참가 인원 -->
+
+        <div class="setting-row">
+
+            <div class="setting-label">
+                👥 참가 인원
+            </div>
+
+
+            <select
+            id="playerCountSelect"
+            class="setting-select">
+
+                <option
+                value="1"
+                selected>
+                    1명
+                </option>
+
+                <option value="2">
+                    2명
+                </option>
+
+                <option value="3">
+                    3명
+                </option>
+
+                <option value="4">
+                    4명
+                </option>
+
+                <option value="5">
+                    5명
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- 문제 제한 시간 -->
+
+        <div class="setting-row">
+
+            <div class="setting-label">
+                ⏱️ 한 문제 제한 시간
+            </div>
+
+
+            <select
+            id="questionTimeSelect"
+            class="setting-select">
+
+                <option value="3000">
+                    3초
+                </option>
+
+                <option value="5000">
+                    5초
+                </option>
+
+                <option value="10000">
+                    10초
+                </option>
+
+                <option
+                value="0"
+                selected>
+                    제한 없음
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- 전체 문제풀이 시간 -->
+
+        <div class="setting-row">
+
+            <div class="setting-label">
+                ⏳ 전체 문제풀이 시간
+            </div>
+
+
+            <select
+            id="totalTimeSelect"
+            class="setting-select">
+
+                <option
+                value="30000"
+                selected>
+                    30초
+                </option>
+
+                <option value="60000">
+                    1분
+                </option>
+
+                <option value="120000">
+                    2분
+                </option>
+
+                <option value="180000">
+                    3분
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- 하트 -->
+
+        <div class="setting-row">
+
+            <div class="setting-label">
+                ❤️ 하트
+            </div>
+
+
+            <select
+            id="heartsSelect"
+            class="setting-select">
+
+                <option
+                value="1"
+                selected>
+                    ❤️ 1개
+                </option>
+
+                <option value="2">
+                    ❤️❤️ 2개
+                </option>
+
+                <option value="3">
+                    ❤️❤️❤️ 3개
+                </option>
+
+            </select>
+
+        </div>
+
+
     </div>
-
-
-    <div class="option-buttons">
-
-        <button
-        class="setupBtn countBtn"
-        data-count="1">
-            1명
-        </button>
-
-        <button
-        class="setupBtn countBtn"
-        data-count="2">
-            2명
-        </button>
-
-        <button
-        class="setupBtn countBtn"
-        data-count="3">
-            3명
-        </button>
-
-        <button
-        class="setupBtn countBtn"
-        data-count="4">
-            4명
-        </button>
-
-        <button
-        class="setupBtn countBtn selected"
-        data-count="5">
-            5명
-        </button>
-
-    </div>
-
-
-
-    <!-- 한 문제 제한 시간 -->
-
-    <div class="option-title">
-        ⏱️ 한 문제 제한 시간
-    </div>
-
-
-    <div class="option-buttons">
-
-        <button
-        class="setupBtn questionTimeBtn selected"
-        data-time="3000">
-            3초
-        </button>
-
-        <button
-        class="setupBtn questionTimeBtn"
-        data-time="5000">
-            5초
-        </button>
-
-        <button
-        class="setupBtn questionTimeBtn"
-        data-time="10000">
-            10초
-        </button>
-
-        <button
-        class="setupBtn questionTimeBtn"
-        data-time="0">
-            제한 없음
-        </button>
-
-    </div>
-
-
-
-    <!-- 전체 문제풀이 시간 -->
-
-    <div class="option-title">
-        ⏳ 전체 문제풀이 시간
-    </div>
-
-
-    <div class="option-buttons">
-
-        <button
-        class="setupBtn totalTimeBtn"
-        data-time="30000">
-            30초
-        </button>
-
-        <button
-        class="setupBtn totalTimeBtn selected"
-        data-time="60000">
-            1분
-        </button>
-
-        <button
-        class="setupBtn totalTimeBtn"
-        data-time="120000">
-            2분
-        </button>
-
-        <button
-        class="setupBtn totalTimeBtn"
-        data-time="180000">
-            3분
-        </button>
-
-    </div>
-
 
 
     <button id="startBtn">
-        게임 시작
+        🔊 게임 시작
     </button>
 
 </div>
 
 
 
-<!-- ==============================
-     게임 화면
-=============================== -->
+<!-- ==================================================
+     게임
+================================================== -->
 
 <div id="game">
 
-    <div id="globalTimer">
-        ⏳ 1:00
+
+    <div id="countdownOverlay">
+
+        <div id="countdownNumber">
+            3
+        </div>
+
     </div>
 
 
+
+    <div id="globalTimer">
+        ⏳ 0:30
+    </div>
+
+
+
     <div id="players"></div>
+
 
 </div>
 
 
 
-<!-- ==============================
-     결과 화면
-=============================== -->
+<!-- ==================================================
+     결과
+================================================== -->
 
 <div id="resultScreen">
 
@@ -1118,23 +1414,27 @@ and
 
 <script>
 
-/* =====================================
+/* ==================================================
    기본 설정
-===================================== */
 
-/* 한 문제 기본 시간 = 3초 */
+   기본값
+   1명
+   문제 제한 없음
+   전체 30초
+   하트 1개
+================================================== */
 
-let QUESTION_TIME = 3000;
+let playerCount = 1;
+
+let QUESTION_TIME = 0;
+
+let TOTAL_TIME = 30000;
+
+let MAX_HEARTS = 1;
 
 
-/* 전체 게임 기본 시간 = 1분 */
-
-let TOTAL_TIME = 60000;
-
-
-/* 기본 인원 = 5명 */
-
-let playerCount = 5;
+const WRONG_PENALTY_TIME =
+    3000;
 
 
 let players = [];
@@ -1148,143 +1448,417 @@ let globalTimerInterval = null;
 
 let globalStartTime = 0;
 
+let countdownInterval = null;
 
 
-/* =====================================
-   선택 버튼 처리
-===================================== */
+/* ==================================================
+   소리 설정
+================================================== */
 
-function selectButton(
-    button,
-    selector
-) {
+let audioContext = null;
 
-    document
-    .querySelectorAll(selector)
-    .forEach(btn => {
 
-        btn.classList.remove(
-            "selected"
+/*
+   오디오 기능 활성화
+
+   모바일 브라우저에서는
+   사용자가 버튼을 직접 누른 순간
+   AudioContext를 활성화해야
+   이후 소리가 정상적으로 납니다.
+*/
+
+function initAudio() {
+
+    try {
+
+        const AudioContextClass =
+
+            window.AudioContext
+            ||
+            window.webkitAudioContext;
+
+
+        if(!AudioContextClass) {
+
+            return;
+
+        }
+
+
+        if(!audioContext) {
+
+            audioContext =
+                new AudioContextClass();
+
+        }
+
+
+        if(
+            audioContext.state ===
+            "suspended"
+        ) {
+
+            audioContext.resume();
+
+        }
+
+
+        /*
+           아주 작은 무음에 가까운 소리로
+           모바일 오디오를 활성화
+        */
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+
+        gain.gain.value =
+            0.00001;
+
+
+        oscillator.connect(
+            gain
         );
 
-    });
+
+        gain.connect(
+            audioContext.destination
+        );
 
 
-    button.classList.add(
-        "selected"
+        oscillator.start();
+
+
+        oscillator.stop(
+            audioContext.currentTime
+            +
+            0.02
+        );
+
+    }
+
+    catch(error) {
+
+        console.log(
+            "오디오 활성화 실패",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* ==================================================
+   카운트다운 비프음
+================================================== */
+
+function playCountdownBeep() {
+
+    if(!audioContext) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const now =
+            audioContext.currentTime;
+
+
+        const oscillator =
+            audioContext.createOscillator();
+
+
+        const gain =
+            audioContext.createGain();
+
+
+        oscillator.type =
+            "sine";
+
+
+        oscillator.frequency
+        .setValueAtTime(
+            520,
+            now
+        );
+
+
+        gain.gain
+        .setValueAtTime(
+            0.0001,
+            now
+        );
+
+
+        gain.gain
+        .exponentialRampToValueAtTime(
+            0.22,
+            now + 0.015
+        );
+
+
+        gain.gain
+        .exponentialRampToValueAtTime(
+            0.0001,
+            now + 0.20
+        );
+
+
+        oscillator.connect(
+            gain
+        );
+
+
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        oscillator.start(
+            now
+        );
+
+
+        oscillator.stop(
+            now + 0.22
+        );
+
+    }
+
+    catch(error) {
+
+        console.log(
+            "카운트다운 소리 오류",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* ==================================================
+   실제 시작음
+================================================== */
+
+function playStartSound() {
+
+    if(!audioContext) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const now =
+            audioContext.currentTime;
+
+
+        /*
+           첫 번째 음
+        */
+
+        createStartTone(
+            660,
+            now,
+            0.16
+        );
+
+
+        /*
+           두 번째 높은 음
+        */
+
+        createStartTone(
+            880,
+            now + 0.15,
+            0.32
+        );
+
+    }
+
+    catch(error) {
+
+        console.log(
+            "시작음 오류",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* ==================================================
+   시작음 개별 음 생성
+================================================== */
+
+function createStartTone(
+    frequency,
+    startTime,
+    duration
+) {
+
+    const oscillator =
+        audioContext
+        .createOscillator();
+
+
+    const gain =
+        audioContext
+        .createGain();
+
+
+    oscillator.type =
+        "sine";
+
+
+    oscillator.frequency
+    .setValueAtTime(
+        frequency,
+        startTime
+    );
+
+
+    gain.gain
+    .setValueAtTime(
+        0.0001,
+        startTime
+    );
+
+
+    gain.gain
+    .exponentialRampToValueAtTime(
+        0.28,
+        startTime + 0.015
+    );
+
+
+    gain.gain
+    .exponentialRampToValueAtTime(
+        0.0001,
+        startTime + duration
+    );
+
+
+    oscillator.connect(
+        gain
+    );
+
+
+    gain.connect(
+        audioContext.destination
+    );
+
+
+    oscillator.start(
+        startTime
+    );
+
+
+    oscillator.stop(
+        startTime + duration + 0.02
     );
 
 }
 
 
 
-/* =====================================
-   참가 인원 선택
-===================================== */
-
-document
-.querySelectorAll(".countBtn")
-.forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            selectButton(
-                button,
-                ".countBtn"
-            );
-
-
-            playerCount =
-                Number(
-                    button.dataset.count
-                );
-
-        }
-    );
-
-});
-
-
-
-/* =====================================
-   한 문제 제한 시간
-===================================== */
-
-document
-.querySelectorAll(
-    ".questionTimeBtn"
-)
-.forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            selectButton(
-                button,
-                ".questionTimeBtn"
-            );
-
-
-            QUESTION_TIME =
-                Number(
-                    button.dataset.time
-                );
-
-        }
-    );
-
-});
-
-
-
-/* =====================================
-   전체 문제풀이 시간
-===================================== */
-
-document
-.querySelectorAll(
-    ".totalTimeBtn"
-)
-.forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            selectButton(
-                button,
-                ".totalTimeBtn"
-            );
-
-
-            TOTAL_TIME =
-                Number(
-                    button.dataset.time
-                );
-
-        }
-    );
-
-});
-
-
-
-/* =====================================
+/* ==================================================
    게임 시작
-===================================== */
+================================================== */
 
 document
-.getElementById("startBtn")
+.getElementById(
+    "startBtn"
+)
 .addEventListener(
     "click",
     startGame
 );
 
 
+
 function startGame() {
+
+
+    /*
+       사용자가 시작 버튼을 누른 순간
+       오디오 활성화
+    */
+
+    initAudio();
+
+
+
+    /*
+       설정값
+    */
+
+    playerCount =
+
+        Number(
+
+            document
+            .getElementById(
+                "playerCountSelect"
+            )
+            .value
+
+        );
+
+
+    QUESTION_TIME =
+
+        Number(
+
+            document
+            .getElementById(
+                "questionTimeSelect"
+            )
+            .value
+
+        );
+
+
+    TOTAL_TIME =
+
+        Number(
+
+            document
+            .getElementById(
+                "totalTimeSelect"
+            )
+            .value
+
+        );
+
+
+    MAX_HEARTS =
+
+        Number(
+
+            document
+            .getElementById(
+                "heartsSelect"
+            )
+            .value
+
+        );
+
+
 
     players = [];
 
@@ -1293,11 +1867,13 @@ function startGame() {
     resultShown = false;
 
 
+
     for(
         let i = 0;
         i < playerCount;
         i++
     ) {
+
 
         players.push({
 
@@ -1306,69 +1882,296 @@ function startGame() {
             name:
                 `${i + 1}번`,
 
-            score: 0,
+            score:
+                0,
 
-            number: 0,
+            hearts:
+                MAX_HEARTS,
 
-            alive: true,
+            number:
+                0,
 
-            accepting: false,
+            alive:
+                true,
 
-            questionTimer: null,
+            accepting:
+                false,
 
-            questionStartTime: 0
+            paused:
+                false,
+
+            questionTimer:
+                null,
+
+            questionStartTime:
+                0,
+
+            transitionTimer:
+                null,
+
+            penaltyInterval:
+                null,
+
+            penaltyTimeout:
+                null
 
         });
 
     }
 
 
-    /* 게임 중에는 페이지 고정 */
 
-    document.body
-    .classList.add(
+    document
+    .body
+    .classList
+    .add(
         "game-active"
     );
 
 
+
     document
-    .getElementById("setup")
-    .style.display =
+    .getElementById(
+        "setup"
+    )
+    .style
+    .display =
         "none";
 
 
+
     document
-    .getElementById("game")
-    .style.display =
+    .getElementById(
+        "game"
+    )
+    .style
+    .display =
         "block";
 
 
-    /* 이전 경고 색 제거 */
 
-    document
-    .getElementById("globalTimer")
-    .classList.remove(
+    const globalTimer =
+
+        document
+        .getElementById(
+            "globalTimer"
+        );
+
+
+
+    globalTimer
+    .classList
+    .remove(
         "danger"
     );
+
+
+    globalTimer
+    .style
+    .visibility =
+        "hidden";
+
 
 
     createPlayerAreas();
 
 
-    startGlobalTimer();
+    startCountdown();
+
+}
+
+
+
+/* ==================================================
+   3초 카운트다운
+================================================== */
+
+function startCountdown() {
+
+
+    const overlay =
+
+        document
+        .getElementById(
+            "countdownOverlay"
+        );
+
+
+    const number =
+
+        document
+        .getElementById(
+            "countdownNumber"
+        );
+
+
+    overlay
+    .style
+    .display =
+        "flex";
+
+
+    let count =
+        3;
+
+
+    showCountdownNumber(
+        number,
+        count
+    );
 
 
     /*
-       모든 학생이 각각
-       동시에 게임 시작
+       3 표시와 동시에 소리
     */
 
-    players.forEach(
+    playCountdownBeep();
+
+
+
+    countdownInterval =
+
+        setInterval(
+            () => {
+
+
+                count--;
+
+
+                if(
+                    count > 0
+                ) {
+
+
+                    showCountdownNumber(
+                        number,
+                        count
+                    );
+
+
+                    /*
+                       2, 1 비프음
+                    */
+
+                    playCountdownBeep();
+
+
+                }
+
+                else {
+
+
+                    clearInterval(
+                        countdownInterval
+                    );
+
+
+                    countdownInterval =
+                        null;
+
+
+                    overlay
+                    .style
+                    .display =
+                        "none";
+
+
+                    /*
+                       실제 시작음
+                    */
+
+                    playStartSound();
+
+
+                    beginActualGame();
+
+                }
+
+
+            },
+
+            1000
+
+        );
+
+}
+
+
+
+/* ==================================================
+   카운트다운 효과
+================================================== */
+
+function showCountdownNumber(
+    element,
+    value
+) {
+
+
+    element
+    .innerText =
+        value;
+
+
+    element
+    .classList
+    .remove(
+        "countdown-pop"
+    );
+
+
+    void element.offsetWidth;
+
+
+    element
+    .classList
+    .add(
+        "countdown-pop"
+    );
+
+}
+
+
+
+/* ==================================================
+   실제 게임 시작
+================================================== */
+
+function beginActualGame() {
+
+
+    if(
+        gameFinished
+    ) {
+
+        return;
+
+    }
+
+
+
+    document
+    .getElementById(
+        "globalTimer"
+    )
+    .style
+    .visibility =
+        "visible";
+
+
+    startGlobalTimer();
+
+
+
+    players
+    .forEach(
         player => {
+
 
             nextQuestion(
                 player.id
             );
+
 
         }
     );
@@ -1377,11 +2180,12 @@ function startGame() {
 
 
 
-/* =====================================
+/* ==================================================
    플레이어 화면 생성
-===================================== */
+================================================== */
 
 function createPlayerAreas() {
+
 
     const area =
 
@@ -1391,10 +2195,14 @@ function createPlayerAreas() {
         );
 
 
-    area.innerHTML = "";
+    area
+    .innerHTML =
+        "";
 
 
-    players.forEach(
+
+    players
+    .forEach(
         player => {
 
 
@@ -1406,21 +2214,25 @@ function createPlayerAreas() {
                 );
 
 
-            div.className =
+            div
+            .className =
                 "player";
 
 
-            div.id =
+            div
+            .id =
                 `player-${player.id}`;
 
 
 
-            let timerHTML = "";
+            let timerHTML =
+                "";
 
 
             if(
                 QUESTION_TIME === 0
             ) {
+
 
                 timerHTML = `
 
@@ -1433,9 +2245,11 @@ function createPlayerAreas() {
 
                 `;
 
+
             }
 
             else {
+
 
                 timerHTML = `
 
@@ -1467,11 +2281,14 @@ function createPlayerAreas() {
 
                 `;
 
+
             }
 
 
 
-            div.innerHTML = `
+            div
+            .innerHTML = `
+
 
                 <div
                 class="player-name">
@@ -1479,6 +2296,7 @@ function createPlayerAreas() {
                     ${player.name}
 
                 </div>
+
 
 
                 <div
@@ -1499,6 +2317,21 @@ function createPlayerAreas() {
                 </div>
 
 
+
+                <div
+                class="hearts"
+                id="hearts-${player.id}">
+
+                    ${
+                        getHeartText(
+                            player.hearts
+                        )
+                    }
+
+                </div>
+
+
+
                 <div
                 class="number"
                 id="number-${player.id}">
@@ -1508,7 +2341,16 @@ function createPlayerAreas() {
                 </div>
 
 
+
+                <div
+                class="status-message"
+                id="status-${player.id}">
+                </div>
+
+
+
                 ${timerHTML}
+
 
 
                 <div
@@ -1537,20 +2379,55 @@ function createPlayerAreas() {
 
                 </div>
 
+
+
+                <div
+                class="penalty-overlay"
+                id="penalty-${player.id}">
+
+
+                    <div
+                    class="penalty-title">
+
+                        ❌ 오답!
+
+                    </div>
+
+
+                    <div
+                    class="penalty-count"
+                    id="penaltyCount-${player.id}">
+
+                        3
+
+                    </div>
+
+
+                    <div
+                    class="penalty-sub">
+
+                        잠시 기다리세요
+
+                    </div>
+
+
+                </div>
+
+
             `;
 
 
-            area.appendChild(
+
+            area
+            .appendChild(
                 div
             );
+
 
         }
     );
 
 
-    /*
-       멀티터치 이벤트 연결
-    */
 
     bindAnswerButtons();
 
@@ -1558,11 +2435,38 @@ function createPlayerAreas() {
 
 
 
-/* =====================================
-   멀티터치 입력
-===================================== */
+/* ==================================================
+   하트 표시
+================================================== */
+
+function getHeartText(
+    hearts
+) {
+
+
+    if(
+        hearts <= 0
+    ) {
+
+        return "💔";
+
+    }
+
+
+    return "❤️".repeat(
+        hearts
+    );
+
+}
+
+
+
+/* ==================================================
+   멀티터치
+================================================== */
 
 function bindAnswerButtons() {
+
 
     const buttons =
 
@@ -1572,41 +2476,44 @@ function bindAnswerButtons() {
         );
 
 
-    buttons.forEach(
+
+    buttons
+    .forEach(
         button => {
 
 
-            button.addEventListener(
+            button
+            .addEventListener(
                 "pointerdown",
                 function(event) {
 
 
-                    /*
-                       브라우저 기본 터치 동작 차단
-                    */
-
-                    event.preventDefault();
+                    event
+                    .preventDefault();
 
 
-                    /*
-                       각 손가락을
-                       독립적으로 처리
-                    */
 
                     try {
 
-                        this.setPointerCapture(
+
+                        this
+                        .setPointerCapture(
                             event.pointerId
                         );
 
+
                     }
 
-                    catch(e) {}
+                    catch(error) {}
 
 
-                    this.classList.add(
+
+                    this
+                    .classList
+                    .add(
                         "pressed"
                     );
+
 
 
                     const id =
@@ -1621,15 +2528,12 @@ function bindAnswerButtons() {
                         this.dataset.choice;
 
 
-                    /*
-                       손가락이 닿는 순간
-                       바로 판정
-                    */
 
                     answer(
                         id,
                         choice
                     );
+
 
                 },
 
@@ -1644,26 +2548,34 @@ function bindAnswerButtons() {
             const release =
                 function() {
 
-                    this.classList.remove(
+
+                    this
+                    .classList
+                    .remove(
                         "pressed"
                     );
+
 
                 };
 
 
-            button.addEventListener(
+
+            button
+            .addEventListener(
                 "pointerup",
                 release
             );
 
 
-            button.addEventListener(
+            button
+            .addEventListener(
                 "pointercancel",
                 release
             );
 
 
-            button.addEventListener(
+            button
+            .addEventListener(
                 "lostpointercapture",
                 release
             );
@@ -1676,28 +2588,38 @@ function bindAnswerButtons() {
 
 
 
-/* =====================================
+/* ==================================================
    새 문제
-===================================== */
+================================================== */
 
 function nextQuestion(id) {
 
-    if(gameFinished) {
+
+    if(
+        gameFinished
+    ) {
 
         return;
 
     }
+
 
 
     const player =
         players[id];
 
 
-    if(!player.alive) {
+
+    if(
+        !player ||
+        !player.alive ||
+        player.paused
+    ) {
 
         return;
 
     }
+
 
 
     clearInterval(
@@ -1705,9 +2627,11 @@ function nextQuestion(id) {
     );
 
 
-    /*
-       1 ~ 99 랜덤 숫자
-    */
+    clearTimeout(
+        player.transitionTimer
+    );
+
+
 
     player.number =
 
@@ -1716,8 +2640,10 @@ function nextQuestion(id) {
         ) + 1;
 
 
+
     player.accepting =
         true;
+
 
 
     const numberElement =
@@ -1728,24 +2654,58 @@ function nextQuestion(id) {
         );
 
 
-    if(numberElement) {
 
-        numberElement.innerText =
+    if(
+        numberElement
+    ) {
+
+
+        numberElement
+        .innerText =
             player.number;
+
 
     }
 
 
-    /*
-       문제 제한 시간이
-       있을 때만 타이머 시작
-    */
+
+    const status =
+
+        document
+        .getElementById(
+            `status-${id}`
+        );
+
+
+
+    if(
+        status
+    ) {
+
+
+        status
+        .innerText =
+            "";
+
+
+        status
+        .className =
+            "status-message";
+
+
+    }
+
+
 
     if(
         QUESTION_TIME > 0
     ) {
 
-        startQuestionTimer(id);
+
+        startQuestionTimer(
+            id
+        );
+
 
     }
 
@@ -1753,18 +2713,21 @@ function nextQuestion(id) {
 
 
 
-/* =====================================
-   문제별 타이머
-===================================== */
+/* ==================================================
+   문제 제한 시간
+================================================== */
 
 function startQuestionTimer(id) {
+
 
     const player =
         players[id];
 
 
+
     player.questionStartTime =
         performance.now();
+
 
 
     const timerBar =
@@ -1775,12 +2738,14 @@ function startQuestionTimer(id) {
         );
 
 
+
     const timerText =
 
         document
         .getElementById(
             `timerText-${id}`
         );
+
 
 
     if(
@@ -1793,15 +2758,22 @@ function startQuestionTimer(id) {
     }
 
 
-    timerBar.style.width =
+
+    timerBar
+    .style
+    .width =
         "100%";
 
 
-    timerBar.style.background =
+    timerBar
+    .style
+    .background =
         "#4caf50";
 
 
-    timerText.innerText =
+
+    timerText
+    .innerText =
 
         (
             QUESTION_TIME
@@ -1813,6 +2785,7 @@ function startQuestionTimer(id) {
         "초";
 
 
+
     player.questionTimer =
 
         setInterval(
@@ -1822,16 +2795,20 @@ function startQuestionTimer(id) {
                 if(
                     gameFinished ||
                     !player.alive ||
-                    !player.accepting
+                    !player.accepting ||
+                    player.paused
                 ) {
+
 
                     clearInterval(
                         player.questionTimer
                     );
 
+
                     return;
 
                 }
+
 
 
                 const elapsed =
@@ -1839,6 +2816,7 @@ function startQuestionTimer(id) {
                     performance.now()
                     -
                     player.questionStartTime;
+
 
 
                 const remaining =
@@ -1854,6 +2832,7 @@ function startQuestionTimer(id) {
                     );
 
 
+
                 const percent =
 
                     remaining
@@ -1863,12 +2842,19 @@ function startQuestionTimer(id) {
                     100;
 
 
-                timerBar.style.width =
 
-                    percent + "%";
+                timerBar
+                .style
+                .width =
+
+                    percent
+                    +
+                    "%";
 
 
-                timerText.innerText =
+
+                timerText
+                .innerText =
 
                     (
                         remaining
@@ -1880,18 +2866,17 @@ function startQuestionTimer(id) {
                     "초";
 
 
-                /*
-                   타이머 색 변화
-                */
 
                 if(
                     percent <= 30
                 ) {
 
+
                     timerBar
                     .style
                     .background =
                         "#f44336";
+
 
                 }
 
@@ -1899,33 +2884,42 @@ function startQuestionTimer(id) {
                     percent <= 60
                 ) {
 
+
                     timerBar
                     .style
                     .background =
                         "#ff9800";
 
+
                 }
 
                 else {
+
 
                     timerBar
                     .style
                     .background =
                         "#4caf50";
 
+
                 }
+
 
 
                 if(
                     remaining <= 0
                 ) {
 
+
                     clearInterval(
                         player.questionTimer
                     );
 
 
-                    timeOver(id);
+                    timeFailed(
+                        id
+                    );
+
 
                 }
 
@@ -1940,30 +2934,18 @@ function startQuestionTimer(id) {
 
 
 
-/* =====================================
+/* ==================================================
    답 선택
-===================================== */
+================================================== */
 
 function answer(
     id,
     choice
 ) {
 
-    if(gameFinished) {
-
-        return;
-
-    }
-
-
-    const player =
-        players[id];
-
 
     if(
-        !player ||
-        !player.alive ||
-        !player.accepting
+        gameFinished
     ) {
 
         return;
@@ -1971,18 +2953,34 @@ function answer(
     }
 
 
-    /*
-       동시에 두 버튼을 눌러도
-       첫 번째 입력만 인정
-    */
+
+    const player =
+        players[id];
+
+
+
+    if(
+        !player ||
+        !player.alive ||
+        !player.accepting ||
+        player.paused
+    ) {
+
+        return;
+
+    }
+
+
 
     player.accepting =
         false;
 
 
+
     clearInterval(
         player.questionTimer
     );
+
 
 
     const correctChoice =
@@ -1994,20 +2992,27 @@ function answer(
         : "odd";
 
 
+
     if(
-        choice === correctChoice
+        choice ===
+        correctChoice
     ) {
 
-        correct(id);
+
+        correct(
+            id
+        );
+
 
     }
 
     else {
 
-        eliminate(
-            id,
-            "❌ 틀렸어요!"
+
+        wrongAnswer(
+            id
         );
+
 
     }
 
@@ -2015,14 +3020,16 @@ function answer(
 
 
 
-/* =====================================
+/* ==================================================
    정답
-===================================== */
+================================================== */
 
 function correct(id) {
 
+
     const player =
         players[id];
+
 
 
     if(
@@ -2035,7 +3042,9 @@ function correct(id) {
     }
 
 
+
     player.score++;
+
 
 
     const scoreElement =
@@ -2046,12 +3055,47 @@ function correct(id) {
         );
 
 
-    if(scoreElement) {
 
-        scoreElement.innerText =
+    if(
+        scoreElement
+    ) {
+
+
+        scoreElement
+        .innerText =
             player.score;
 
+
     }
+
+
+
+    const status =
+
+        document
+        .getElementById(
+            `status-${id}`
+        );
+
+
+
+    if(
+        status
+    ) {
+
+
+        status
+        .innerText =
+            "⭕ 정답!";
+
+
+        status
+        .className =
+            "status-message status-correct";
+
+
+    }
+
 
 
     const playerArea =
@@ -2062,11 +3106,11 @@ function correct(id) {
         );
 
 
-    /*
-       초록색 정답 효과
-    */
 
-    if(playerArea) {
+    if(
+        playerArea
+    ) {
+
 
         playerArea
         .classList
@@ -2075,8 +3119,10 @@ function correct(id) {
         );
 
 
+
         setTimeout(
             () => {
+
 
                 playerArea
                 ?.classList
@@ -2084,61 +3130,56 @@ function correct(id) {
                     "correctFlash"
                 );
 
+
             },
 
-            200
+            180
         );
+
 
     }
 
 
-    /*
-       해당 학생만
-       바로 다음 문제
-    */
 
-    setTimeout(
-        () => {
+    player.transitionTimer =
 
-            if(
-                !gameFinished &&
-                player.alive
-            ) {
+        setTimeout(
+            () => {
 
-                nextQuestion(id);
 
-            }
+                if(
+                    !gameFinished &&
+                    player.alive &&
+                    !player.paused
+                ) {
 
-        },
 
-        120
-    );
+                    nextQuestion(
+                        id
+                    );
+
+
+                }
+
+
+            },
+
+            180
+        );
 
 }
 
 
 
-/* =====================================
-   문제 시간 초과
-===================================== */
+/* ==================================================
+   오답
+================================================== */
 
-function timeOver(id) {
-
-    if(gameFinished) {
-
-        return;
-
-    }
-
-
-    const player =
-        players[id];
+function wrongAnswer(id) {
 
 
     if(
-        !player ||
-        !player.alive ||
-        !player.accepting
+        gameFinished
     ) {
 
         return;
@@ -2146,37 +3187,10 @@ function timeOver(id) {
     }
 
 
-    player.accepting =
-        false;
-
-
-    eliminate(
-        id,
-        "⏰ 시간 초과!"
-    );
-
-}
-
-
-
-/* =====================================
-   탈락
-===================================== */
-
-function eliminate(
-    id,
-    reason
-) {
-
-    if(gameFinished) {
-
-        return;
-
-    }
-
 
     const player =
         players[id];
+
 
 
     if(
@@ -2189,6 +3203,479 @@ function eliminate(
     }
 
 
+
+    player.accepting =
+        false;
+
+
+
+    clearInterval(
+        player.questionTimer
+    );
+
+
+
+    player.hearts--;
+
+
+
+    if(
+        player.hearts < 0
+    ) {
+
+
+        player.hearts =
+            0;
+
+
+    }
+
+
+
+    updateHearts(
+        id
+    );
+
+
+
+    /*
+       마지막 하트가 없어지면
+       바로 탈락
+    */
+
+    if(
+        player.hearts <= 0
+    ) {
+
+
+        eliminate(
+            id,
+            "❌ 틀렸어요!"
+        );
+
+
+        return;
+
+    }
+
+
+
+    /*
+       하트가 남은 경우에만
+       3초 페널티
+    */
+
+    startWrongPenalty(
+        id
+    );
+
+}
+
+
+
+/* ==================================================
+   오답 3초 정지
+================================================== */
+
+function startWrongPenalty(id) {
+
+
+    const player =
+        players[id];
+
+
+
+    if(
+        !player ||
+        !player.alive ||
+        gameFinished
+    ) {
+
+        return;
+
+    }
+
+
+
+    player.paused =
+        true;
+
+
+    player.accepting =
+        false;
+
+
+
+    const overlay =
+
+        document
+        .getElementById(
+            `penalty-${id}`
+        );
+
+
+
+    const countElement =
+
+        document
+        .getElementById(
+            `penaltyCount-${id}`
+        );
+
+
+
+    if(
+        !overlay
+    ) {
+
+        return;
+
+    }
+
+
+
+    overlay
+    .style
+    .display =
+        "flex";
+
+
+
+    let remainingCount =
+        3;
+
+
+
+    countElement
+    .innerText =
+        remainingCount;
+
+
+
+    player.penaltyInterval =
+
+        setInterval(
+            () => {
+
+
+                remainingCount--;
+
+
+
+                if(
+                    remainingCount > 0
+                ) {
+
+
+                    if(
+                        countElement
+                    ) {
+
+
+                        countElement
+                        .innerText =
+                            remainingCount;
+
+
+                    }
+
+
+                }
+
+
+            },
+
+            1000
+
+        );
+
+
+
+    player.penaltyTimeout =
+
+        setTimeout(
+            () => {
+
+
+                clearInterval(
+                    player.penaltyInterval
+                );
+
+
+
+                player.penaltyInterval =
+                    null;
+
+
+                player.penaltyTimeout =
+                    null;
+
+
+
+                if(
+                    gameFinished
+                ) {
+
+                    return;
+
+                }
+
+
+
+                if(
+                    overlay
+                ) {
+
+
+                    overlay
+                    .style
+                    .display =
+                        "none";
+
+
+                }
+
+
+
+                player.paused =
+                    false;
+
+
+
+                if(
+                    player.alive
+                ) {
+
+
+                    nextQuestion(
+                        id
+                    );
+
+
+                }
+
+
+            },
+
+            WRONG_PENALTY_TIME
+
+        );
+
+}
+
+
+
+/* ==================================================
+   문제 시간 초과
+================================================== */
+
+function timeFailed(id) {
+
+
+    if(
+        gameFinished
+    ) {
+
+        return;
+
+    }
+
+
+
+    const player =
+        players[id];
+
+
+
+    if(
+        !player ||
+        !player.alive
+    ) {
+
+        return;
+
+    }
+
+
+
+    player.accepting =
+        false;
+
+
+
+    player.hearts--;
+
+
+
+    if(
+        player.hearts < 0
+    ) {
+
+
+        player.hearts =
+            0;
+
+
+    }
+
+
+
+    updateHearts(
+        id
+    );
+
+
+
+    if(
+        player.hearts <= 0
+    ) {
+
+
+        eliminate(
+            id,
+            "⏰ 시간 초과!"
+        );
+
+
+        return;
+
+    }
+
+
+
+    const status =
+
+        document
+        .getElementById(
+            `status-${id}`
+        );
+
+
+
+    if(
+        status
+    ) {
+
+
+        status
+        .innerText =
+            "⏰ 시간 초과! ❤️ -1";
+
+
+        status
+        .className =
+            "status-message status-wrong";
+
+
+    }
+
+
+
+    player.transitionTimer =
+
+        setTimeout(
+            () => {
+
+
+                if(
+                    !gameFinished &&
+                    player.alive
+                ) {
+
+
+                    nextQuestion(
+                        id
+                    );
+
+
+                }
+
+
+            },
+
+            550
+        );
+
+}
+
+
+
+/* ==================================================
+   하트 갱신
+================================================== */
+
+function updateHearts(id) {
+
+
+    const player =
+        players[id];
+
+
+
+    const heartsElement =
+
+        document
+        .getElementById(
+            `hearts-${id}`
+        );
+
+
+
+    if(
+        heartsElement
+    ) {
+
+
+        heartsElement
+        .innerText =
+
+            getHeartText(
+                player.hearts
+            );
+
+
+    }
+
+}
+
+
+
+/* ==================================================
+   탈락
+================================================== */
+
+function eliminate(
+    id,
+    reason
+) {
+
+
+    if(
+        gameFinished
+    ) {
+
+        return;
+
+    }
+
+
+
+    const player =
+        players[id];
+
+
+
+    if(
+        !player ||
+        !player.alive
+    ) {
+
+        return;
+
+    }
+
+
+
     player.alive =
         false;
 
@@ -2197,9 +3684,30 @@ function eliminate(
         false;
 
 
+    player.paused =
+        false;
+
+
+
     clearInterval(
         player.questionTimer
     );
+
+
+    clearInterval(
+        player.penaltyInterval
+    );
+
+
+    clearTimeout(
+        player.penaltyTimeout
+    );
+
+
+    clearTimeout(
+        player.transitionTimer
+    );
+
 
 
     const area =
@@ -2210,13 +3718,21 @@ function eliminate(
         );
 
 
-    if(area) {
 
-        area.className =
+    if(
+        area
+    ) {
+
+
+        area
+        .className =
             "player eliminated";
 
 
-        area.innerHTML = `
+
+        area
+        .innerHTML = `
+
 
             <div
             class="player-name">
@@ -2243,6 +3759,17 @@ function eliminate(
 
 
             <div
+            style="
+                font-size:40px;
+                margin:10px;
+            ">
+
+                💔
+
+            </div>
+
+
+            <div
             class="final-score">
 
                 정답
@@ -2250,9 +3777,12 @@ function eliminate(
 
             </div>
 
+
         `;
 
+
     }
+
 
 
     checkAllEliminated();
@@ -2261,19 +3791,22 @@ function eliminate(
 
 
 
-/* =====================================
-   전체 게임 타이머 시작
-===================================== */
+/* ==================================================
+   전체 타이머
+================================================== */
 
 function startGlobalTimer() {
+
 
     globalStartTime =
         performance.now();
 
 
+
     updateGlobalTimerDisplay(
         TOTAL_TIME
     );
+
 
 
     globalTimerInterval =
@@ -2282,15 +3815,20 @@ function startGlobalTimer() {
             () => {
 
 
-                if(gameFinished) {
+                if(
+                    gameFinished
+                ) {
+
 
                     clearInterval(
                         globalTimerInterval
                     );
 
+
                     return;
 
                 }
+
 
 
                 const elapsed =
@@ -2298,6 +3836,7 @@ function startGlobalTimer() {
                     performance.now()
                     -
                     globalStartTime;
+
 
 
                 const remaining =
@@ -2313,9 +3852,11 @@ function startGlobalTimer() {
                     );
 
 
+
                 updateGlobalTimerDisplay(
                     remaining
                 );
+
 
 
                 const display =
@@ -2326,13 +3867,11 @@ function startGlobalTimer() {
                     );
 
 
-                /*
-                   마지막 10초 빨간색
-                */
 
                 if(
                     remaining <= 10000
                 ) {
+
 
                     display
                     .classList
@@ -2340,12 +3879,15 @@ function startGlobalTimer() {
                         "danger"
                     );
 
+
                 }
+
 
 
                 if(
                     remaining <= 0
                 ) {
+
 
                     clearInterval(
                         globalTimerInterval
@@ -2353,6 +3895,7 @@ function startGlobalTimer() {
 
 
                     finishByTotalTime();
+
 
                 }
 
@@ -2367,13 +3910,14 @@ function startGlobalTimer() {
 
 
 
-/* =====================================
-   전체 남은 시간 표시
-===================================== */
+/* ==================================================
+   전체 시간 표시
+================================================== */
 
 function updateGlobalTimerDisplay(
     milliseconds
 ) {
+
 
     const totalSeconds =
 
@@ -2384,16 +3928,23 @@ function updateGlobalTimerDisplay(
         );
 
 
+
     const minutes =
 
         Math.floor(
-            totalSeconds / 60
+            totalSeconds
+            /
+            60
         );
+
 
 
     const seconds =
 
-        totalSeconds % 60;
+        totalSeconds
+        %
+        60;
+
 
 
     document
@@ -2409,37 +3960,61 @@ function updateGlobalTimerDisplay(
         ":"
         +
         String(seconds)
-        .padStart(2, "0");
+        .padStart(
+            2,
+            "0"
+        );
 
 }
 
 
 
-/* =====================================
+/* ==================================================
    전체 시간 종료
-===================================== */
+================================================== */
 
 function finishByTotalTime() {
 
-    if(gameFinished) {
+
+    if(
+        gameFinished
+    ) {
 
         return;
 
     }
 
 
-    gameFinished = true;
+
+    gameFinished =
+        true;
 
 
-    document
-    .getElementById(
-        "globalTimer"
-    )
+
+    const globalTimer =
+
+        document
+        .getElementById(
+            "globalTimer"
+        );
+
+
+
+    globalTimer
     .innerText =
         "⏰ 종료!";
 
 
-    players.forEach(
+    globalTimer
+    .classList
+    .remove(
+        "danger"
+    );
+
+
+
+    players
+    .forEach(
         player => {
 
 
@@ -2448,16 +4023,35 @@ function finishByTotalTime() {
             );
 
 
+            clearInterval(
+                player.penaltyInterval
+            );
+
+
+            clearTimeout(
+                player.penaltyTimeout
+            );
+
+
+            clearTimeout(
+                player.transitionTimer
+            );
+
+
+
             player.accepting =
                 false;
 
 
-            /*
-               살아 있는 학생은
-               시간 종료 화면 표시
-            */
+            player.paused =
+                false;
 
-            if(player.alive) {
+
+
+            if(
+                player.alive
+            ) {
+
 
                 const area =
 
@@ -2467,18 +4061,41 @@ function finishByTotalTime() {
                     );
 
 
-                if(area) {
 
-                    area.className =
+                if(
+                    area
+                ) {
+
+
+                    area
+                    .className =
                         "player time-finished";
 
 
-                    area.innerHTML = `
+
+                    area
+                    .innerHTML = `
+
 
                         <div
                         class="player-name">
 
                             ${player.name}
+
+                        </div>
+
+
+                        <div
+                        style="
+                            font-size:28px;
+                            padding-top:15px;
+                        ">
+
+                            ${
+                                getHeartText(
+                                    player.hearts
+                                )
+                            }
 
                         </div>
 
@@ -2499,15 +4116,19 @@ function finishByTotalTime() {
 
                         </div>
 
+
                     `;
 
+
                 }
+
 
             }
 
 
         }
     );
+
 
 
     setTimeout(
@@ -2519,18 +4140,22 @@ function finishByTotalTime() {
 
 
 
-/* =====================================
-   모든 학생 탈락 확인
-===================================== */
+/* ==================================================
+   전원 탈락
+================================================== */
 
 function checkAllEliminated() {
 
+
     const aliveCount =
 
-        players.filter(
+        players
+        .filter(
             player =>
                 player.alive
-        ).length;
+        )
+        .length;
+
 
 
     if(
@@ -2538,7 +4163,10 @@ function checkAllEliminated() {
         !gameFinished
     ) {
 
-        gameFinished = true;
+
+        gameFinished =
+            true;
+
 
 
         clearInterval(
@@ -2546,10 +4174,12 @@ function checkAllEliminated() {
         );
 
 
+
         setTimeout(
             showResult,
-            700
+            500
         );
+
 
     }
 
@@ -2557,22 +4187,30 @@ function checkAllEliminated() {
 
 
 
-/* =====================================
-   최종 순위
-===================================== */
+/* ==================================================
+   결과
+================================================== */
 
 function showResult() {
 
-    if(resultShown) {
+
+    if(
+        resultShown
+    ) {
 
         return;
 
     }
 
 
-    resultShown = true;
 
-    gameFinished = true;
+    resultShown =
+        true;
+
+
+    gameFinished =
+        true;
+
 
 
     clearInterval(
@@ -2580,28 +4218,82 @@ function showResult() {
     );
 
 
-    players.forEach(
+
+    if(
+        countdownInterval
+    ) {
+
+
+        clearInterval(
+            countdownInterval
+        );
+
+
+    }
+
+
+
+    players
+    .forEach(
         player => {
+
 
             clearInterval(
                 player.questionTimer
             );
 
+
+            clearInterval(
+                player.penaltyInterval
+            );
+
+
+            clearTimeout(
+                player.penaltyTimeout
+            );
+
+
+            clearTimeout(
+                player.transitionTimer
+            );
+
+
         }
     );
 
 
-    /*
-       점수 높은 순서
-    */
 
     const ranking =
 
         [...players]
         .sort(
-            (a, b) =>
-                b.score - a.score
+            (a, b) => {
+
+
+                if(
+                    b.score !==
+                    a.score
+                ) {
+
+
+                    return (
+                        b.score -
+                        a.score
+                    );
+
+
+                }
+
+
+                return (
+                    b.hearts -
+                    a.hearts
+                );
+
+
+            }
         );
+
 
 
     const rankingArea =
@@ -2612,56 +4304,105 @@ function showResult() {
         );
 
 
-    rankingArea.innerHTML = "";
+
+    rankingArea
+    .innerHTML =
+        "";
 
 
-    let rank = 1;
+
+    let rank =
+        1;
 
 
-    ranking.forEach(
+
+    ranking
+    .forEach(
         (
             player,
             index
         ) => {
 
 
-            /*
-               동점 처리
-            */
-
             if(
-                index > 0 &&
-                player.score
-                <
-                ranking[index - 1].score
+                index > 0
             ) {
 
-                rank =
-                    index + 1;
+
+                const previous =
+
+                    ranking[
+                        index - 1
+                    ];
+
+
+
+                if(
+                    player.score !==
+                    previous.score
+                    ||
+                    player.hearts !==
+                    previous.hearts
+                ) {
+
+
+                    rank =
+                        index + 1;
+
+
+                }
+
 
             }
 
 
-            let medal = "";
+
+            let medal =
+                "";
 
 
-            if(rank === 1) {
 
-                medal = "🥇";
+            if(
+                rank === 1
+            ) {
+
+
+                medal =
+                    "🥇";
+
 
             }
 
-            else if(rank === 2) {
+            else if(
+                rank === 2
+            ) {
 
-                medal = "🥈";
+
+                medal =
+                    "🥈";
+
 
             }
 
-            else if(rank === 3) {
+            else if(
+                rank === 3
+            ) {
 
-                medal = "🥉";
+
+                medal =
+                    "🥉";
+
 
             }
+
+
+
+            const hearts =
+
+                getHeartText(
+                    player.hearts
+                );
+
 
 
             const row =
@@ -2672,20 +4413,32 @@ function showResult() {
                 );
 
 
-            row.className =
+
+            row
+            .className =
                 "rank-row";
 
 
-            if(rank === 1) {
 
-                row.classList.add(
+            if(
+                rank === 1
+            ) {
+
+
+                row
+                .classList
+                .add(
                     "rank1"
                 );
+
 
             }
 
 
-            row.innerHTML = `
+
+            row
+            .innerHTML = `
+
 
                 <span>
 
@@ -2700,32 +4453,43 @@ function showResult() {
 
                     ${player.score}개
 
+                    &nbsp;
+
+                    ${hearts}
+
                 </strong>
+
 
             `;
 
 
+
             rankingArea
-            .appendChild(row);
+            .appendChild(
+                row
+            );
+
 
         }
     );
+
 
 
     document
     .getElementById(
         "resultScreen"
     )
-    .style.display =
+    .style
+    .display =
         "flex";
 
 }
 
 
 
-/* =====================================
+/* ==================================================
    다시 하기
-===================================== */
+================================================== */
 
 document
 .getElementById(
@@ -2735,13 +4499,17 @@ document
     "click",
     () => {
 
-        document.body
-        .classList.remove(
+
+        document
+        .body
+        .classList
+        .remove(
             "game-active"
         );
 
 
         location.reload();
+
 
     }
 );
